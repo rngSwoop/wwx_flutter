@@ -13,7 +13,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _auth = FirebaseAuth.instance;
 
-  String errorMessage = "error";
+  String errorMessage = "";
   String email = "";
   String password = "";
 

@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       context.loaderOverlay.show();
                       final newUser = await _auth.signInWithEmailAndPassword(email: email, password: password);
                       if (newUser != null) {
-                        Navigator.pushNamed(context, kBuoysScreenId);
+                        Navigator.pushNamed(context, kDashboardScreenId);
                       }
                     } catch (e) {
                       setState(() {

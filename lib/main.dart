@@ -6,6 +6,7 @@ import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/buoys_screen.dart';
 import 'screens/data_display_screen.dart';
+import 'screens/dashboard_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         kLoginScreenId: (context) => LoginScreen(),
         kRegisterScreenId: (context) => RegisterScreen(),
         kBuoysScreenId: (context) => BuoysScreen(),
+        kDashboardScreenId: (context) => DashboardScreen(),
         // kIndividualBuoyScreen: (context) => IndividualBuoyScreen()
       },
     );
