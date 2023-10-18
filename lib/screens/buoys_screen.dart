@@ -27,6 +27,8 @@ class _BuoysScreenState extends State<BuoysScreen> {
   }
 
   void startScan() {
+    print("Starting Bluetooth scan");
+
     setState(() {
       Permission.bluetoothScan.request();
       Permission.bluetoothConnect.request();
@@ -37,9 +39,9 @@ class _BuoysScreenState extends State<BuoysScreen> {
       flutterBlue.startScan(timeout: const Duration(seconds: 2));
       var subscription = flutterBlue.scanResults.listen((results) async {
         for (ScanResult r in results) {
-          if (r.device.name != "") {
-            if (!deviceList.contains(r.device)) {
-              deviceList.add(r.device);
+          if (r.device.name != "") {                    // If the device name is not empty
+            if (!deviceList.contains(r.device)) {       // and the device is not already in our list
+              deviceList.add(r.device);                 // add the device to our list of bt devRices
               bluetoothItemList.add(
                   BluetoothItem(
                       r.device.name,
@@ -53,8 +55,8 @@ class _BuoysScreenState extends State<BuoysScreen> {
       });
 
       subscription.onDone(() {
-        flutterBlue.stopScan();
-        setState(() {
+        flutterBlue.stopScan();                         // After scan
+        setState(() {                                   // either set bt list state to our list, or to no devices found
           bluetoothItemList = bluetoothItemList.isEmpty
               ? [Text("No devices found.")]
               : bluetoothItemList;
@@ -75,6 +77,8 @@ class _BuoysScreenState extends State<BuoysScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //startScan();    // scan for bluetooth devices will start every time this screen is displayed. MAY REMOVE LATER
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -105,6 +109,9 @@ class _BuoysScreenState extends State<BuoysScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
+                            // Currently, the StartScan button skips the data grab in individual_buoy_screen
+                            // and brings us straight to data_display_screen with dummy data. This button should maybe be removed altogether
+                            // given that we automatically scan in the init state. If we are routed to this buoys_screen, the scan starts automatically.
                               builder: (context) => DataDisplayScreen(dataPoints)
                           )
                       );
@@ -169,11 +176,9 @@ class BluetoothItem extends StatelessWidget {
               ),
             ],
           ),
-          // TODO: DISPLAY ERROR MESSAGE INSTEAD PRINT IF NECESSARY
-          // TODO: FIX THE FACT THAT THE context.loaderOverlay IS NOT SHOWING
           onPressed: () async {
             try {
-              context.loaderOverlay.show();
+              context.loaderOverlay.show();         // TODO: FIX THE FACT THAT THE context.loaderOverlay IS NOT SHOWING
               await device.connect(); // CONNECTS TO DEVICE PRESSED
               Navigator.push(
                   context,
@@ -182,7 +187,7 @@ class BluetoothItem extends StatelessWidget {
                   )
               );
             } catch (e) {
-              print(e);
+              print(e);         // TODO: DISPLAY ERROR MESSAGE INSTEAD PRINT IF NECESSARY
             }
 
             context.loaderOverlay.hide();

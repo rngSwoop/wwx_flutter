@@ -37,6 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Expected JSON-formatted data:
     // [
     //   {
+    //     "buoyID": "123",
     //     "name": "Buoy 1",
     //     "password": "password1",
     //     "authLevel": "user",
@@ -136,10 +137,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onTap: () {
                       print('Gesture Detected for index $index');
                       //Handle selection of a specific buoy
-                      //Navigator.pushNamed(
+                      //Navigator.push(
                       //  context,
-                      //  kBuoyDetailsScreenId,
-                      //  arguments: authBuoys[index], // Pass the selected buoy data
+                      //  MaterialPageRoute(
+                      //    builder: (context) => kBuoyDetailsScreenId(authBuoys[index]), // Pass the selected buoy data
+                      //  ),
                       //);
                     },
                     child: Column(
