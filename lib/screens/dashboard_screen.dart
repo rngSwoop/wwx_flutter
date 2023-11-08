@@ -168,34 +168,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
           ),
-          // Button to initiate Bluetooth scanning
-          Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 16),
-            child: Container(
-                padding: EdgeInsets.only(left: 16, right: 16, bottom: 8.0, top: 8.0),
-                height: 80.0,
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, kBuoysScreenId);
-                  },
-                  child: Text(
-                    "Connect to a Device",
-                    style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  style: ButtonStyle(
-                      elevation: MaterialStateProperty.all<double>(4.0),
-                      shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                      ),
-                      backgroundColor: MaterialStateProperty.all<Color>(kThemeBlue)
-                  ),
-                )
-            ),
-          ) // StyledButton
         ],
       ),
     );

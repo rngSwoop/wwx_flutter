@@ -4,6 +4,7 @@ class AuthBuoys {
   String password;
   String authLevel;
   bool updated;
+  String MAC;
   List<LocationDataPoint> locationData; // List of date and locationLatLong and locationName data points
 
   AuthBuoys({
@@ -12,6 +13,7 @@ class AuthBuoys {
     required this.password,
     required this.authLevel,
     required this.updated,
+    required this.MAC,
     required this.locationData, // Initialize with an empty list
   });
 
@@ -27,6 +29,7 @@ class AuthBuoys {
       password: json['password'] as String,
       authLevel: json['authLevel'] as String,
       updated: json['updated'] as bool,
+      MAC: json['MAC'] as String,
       locationData: dataPoints,
     );
   }

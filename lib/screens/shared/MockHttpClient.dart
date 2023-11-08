@@ -14,6 +14,7 @@ class MockHttpClient {
         "password": "password1",
         "authLevel": "user",
         "updated": true,
+        "MAC": "00:11:22:33:44:55",
         "locationData": [
           {
             "date": "2023-10-15",
@@ -83,6 +84,7 @@ class MockHttpClient {
         "password": "password2",
         "authLevel": "manager",
         "updated": true,
+        "MAC": "A1:B2:C3:D4:E5:F6",
         "locationData": [
           {
             "date": "2023-10-15",
@@ -112,6 +114,7 @@ class MockHttpClient {
         "password": "password3",
         "authLevel": "owner",
         "updated": false,
+        "MAC": "12:34:56:78:9A:BC",
         "locationData": [
           {
             "date": "2023-10-15",
