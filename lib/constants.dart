@@ -7,6 +7,7 @@ const kBuoysScreenId = 'buoys_screen.dart';
 const kDataDisplayId = 'data_display_screen.dart';
 const kIndividualBuoyScreen = 'individual_buoy_screen.dart';
 const kDashboardScreenId = 'dashboard_screen.dart';
+const kBuoyDetailsScreenId = 'buoy_details_screen.dart';
 
 // Colors
 const kThemeBlue = Color(0xFF00285E);

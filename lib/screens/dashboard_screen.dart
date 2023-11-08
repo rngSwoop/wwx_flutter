@@ -33,25 +33,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   // Fetch data via HTTP GET request
   // Update the 'authBuoys' list with fetched data
+  // Expected JSON-formatted data:
+  // [
+  //   {
+  //     "buoyID": "123",
+  //     "name": "Buoy 1",
+  //     "password": "password1",
+  //     "authLevel": "user",
+  //     "updated": true,
+  //     "locationData": [{date, locationLatLong, locationName},{...}]
+  //   },
+  //   // ... more objects ...
+  // ]
   Future<void> _fetchData() async {
-    // Expected JSON-formatted data:
-    // [
-    //   {
-    //     "buoyID": "123",
-    //     "name": "Buoy 1",
-    //     "password": "password1",
-    //     "authLevel": "user",
-    //     "updated": true
-    //   },
-    //   // ... more objects ...
-    // ]
 
     // Create a mock HTTP client
-    final mockClient = MockHttpClient();
-    // Once API endpoint is set up, replace
-    // final mockClient = MockHttpClient();
-    // with
+    // Once API endpoint is set up, replace final mockClient = MockHttpClient(); with
     // final client = http.Client();
+    final mockClient = MockHttpClient();
 
     // Simulate an API call
     // Replace with client.get(Uri.parse('https://your-api-endpoint.com')).then((response)
@@ -59,8 +58,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (response.statusCode == 200) {
         // Parse the JSON response and populate the authBuoys list
         final List<dynamic> jsonData = json.decode(response.body);
+
+        // Create AuthBuoys objects from JSON data
         setState(() {
-          // Create AuthBuoys objects from JSON data
           authBuoys = jsonData.map((map) => AuthBuoys.fromJson(map)).toList();
         });
       } else if (response.statusCode == 404) {
@@ -137,12 +137,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onTap: () {
                       print('Gesture Detected for index $index');
                       //Handle selection of a specific buoy
-                      //Navigator.push(
-                      //  context,
-                      //  MaterialPageRoute(
-                      //    builder: (context) => kBuoyDetailsScreenId(authBuoys[index]), // Pass the selected buoy data
-                      //  ),
-                      //);
+                      Navigator.pushNamed(
+                        context,
+                        kBuoyDetailsScreenId,
+                        arguments: authBuoys[index], // Pass the selected buoy data
+                      );
                     },
                     child: Column(
                       children: [
@@ -170,21 +169,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           // Button to initiate Bluetooth scanning
-          styledButton(
-            text: 'Scan For Devices',
-            onPressed: () {
-              // Navigate to the Bluetooth scanning screen
-              Navigator.pushNamed(context, kBuoysScreenId);
-              // or implement Bluetooth scanning logic here
-            },
-          ), // StyledButton
-          // Button to change password
-          styledButton(
-            text: 'Change Password',
-            onPressed: () {
-              // Show a password change dialog or navigate to a password change screen
-            },
-          ), // StyledButton
+          Padding(
+            padding: const EdgeInsets.only(top: 16, bottom: 16),
+            child: Container(
+                padding: EdgeInsets.only(left: 16, right: 16, bottom: 8.0, top: 8.0),
+                height: 80.0,
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, kBuoysScreenId);
+                  },
+                  child: Text(
+                    "Connect to a Device",
+                    style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all<double>(4.0),
+                      shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(kThemeBlue)
+                  ),
+                )
+            ),
+          ) // StyledButton
         ],
       ),
     );

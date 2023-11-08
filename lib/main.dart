@@ -7,7 +7,9 @@ import 'screens/register_screen.dart';
 import 'screens/buoys_screen.dart';
 import 'screens/data_display_screen.dart';
 import 'screens/dashboard_screen.dart';
+import 'screens/buoy_details_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import './screens/shared/auth_buoys.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +31,17 @@ class MyApp extends StatelessWidget {
         kBuoysScreenId: (context) => BuoysScreen(),
         kDashboardScreenId: (context) => DashboardScreen(),
         // kIndividualBuoyScreen: (context) => IndividualBuoyScreen()
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == kBuoyDetailsScreenId) {
+          // Extract the selected AuthBuoys object from the arguments
+          final selectedAuthBuoys = settings.arguments as AuthBuoys;
+
+          return MaterialPageRoute(
+            builder: (context) => BuoyDetailsScreen(selectedAuthBuoys),
+          );
+        }
+        return null;
       },
     );
   }
