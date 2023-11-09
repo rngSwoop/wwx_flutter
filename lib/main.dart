@@ -10,6 +10,7 @@ import 'screens/dashboard_screen.dart';
 import 'screens/buoy_details_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import './screens/shared/auth_buoys.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,12 +1,51 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:buoy_flutter/constants.dart';
 import './shared/auth_buoys.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 
 class BuoyDetailsScreen extends StatelessWidget {
-  final AuthBuoys selectedAuthBuoys; // You need to define the AuthBuoys object
+  final AuthBuoys selectedAuthBuoys; // Define the AuthBuoys object
 
   BuoyDetailsScreen(this.selectedAuthBuoys);
+
+  // Define a FlutterBlue instance for Bluetooth functionality
+  final FlutterBlue flutterBlue = FlutterBlue.instance;
+
+  Future<void> connectToDevice(String macAddress) async {
+    var device;
+    var subscription = flutterBlue.scanResults.listen((results) async {
+      for (ScanResult result in results) {
+        // Extract normalizedMacAddress from this device.id
+        String uniqueIdentifier = result.device.id.toString();
+        String normalizedMacAddress = uniqueIdentifier.split(RegExp(r'[:-]')).take(6).join(":");
+
+        if (normalizedMacAddress == macAddress) {
+          device = result.device;
+          await device.connect();
+          break;
+        }
+      }
+      // You can continue with other logic if the device is not found
+    });
+
+    // Set a timeout for scanning
+    await Future.delayed(Duration(seconds: 5));
+
+    // Cancel the subscription to stop scanning
+    subscription.cancel();
+
+    if (device != null) {
+      // Device found and connected
+      print('Connected to device: $macAddress');
+      // Go to connected_screen.dart
+    } else {
+      // Device not found
+      print('Device not found: $macAddress');
+      // display to user
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +88,7 @@ class BuoyDetailsScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Define the action when the button is pressed
+                  connectToDevice(selectedAuthBuoys.MAC);
                 },
                 child: Text(
                   "Connect",

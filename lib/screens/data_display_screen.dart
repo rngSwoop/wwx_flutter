@@ -150,40 +150,64 @@ class _DataDisplayState extends State<DataDisplayScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 16, bottom: 16),
                         child: Container(
-                            padding: EdgeInsets.only(left: 16, right: 16, bottom: 8.0, top: 8.0),
-                            height: 80.0,
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              // Send data to server
-                              onPressed: () async {
-                                var response = await postData();
-                                // Display our response from server
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                    insetPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 175),
-                                    title: Text("Response From Server:"),
-                                    content: Text("$response"),
-                                    elevation: 24.0,
-                                    scrollable: true,
+                          padding: EdgeInsets.only(left: 16, right: 16, bottom: 8.0, top: 8.0),
+                          height: 80.0,
+                          width: double.infinity,
+                          child: Row( // Wrap the buttons in a Row
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Adjust alignment as needed
+                            children: [
+                              ElevatedButton(
+                                // Send data to server
+                                onPressed: () async {
+                                  var response = await postData();
+                                  // Display our response from the server
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                      insetPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 175),
+                                      title: Text("Response From Server:"),
+                                      content: Text("$response"),
+                                      elevation: 24.0,
+                                      scrollable: true,
+                                    ),
+                                    barrierDismissible: true,
+                                  );
+                                },
+                                child: Text("Send Data"),
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStateProperty.all<Size>(
+                                    Size(150.0, 50.0), // Set the width and height
                                   ),
-                                  barrierDismissible: true,
-                                );
-                              },
-                              child: Text(
-                                  "Send Data"
-                              ),
-                              style: ButtonStyle(
                                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
                                   ),
-                                  backgroundColor: MaterialStateProperty.all<Color>(kThemeBlue)
+                                  backgroundColor: MaterialStateProperty.all<Color>(kThemeBlue),
+                                ),
                               ),
-                            )
+                              ElevatedButton(
+                                // Disconnect action
+                                onPressed: () {
+                                  Navigator.pushNamed(context, kDashboardScreenId);
+                                },
+                                child: Text("Disconnect"),
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStateProperty.all<Size>(
+                                    Size(150.0, 50.0), // Set the width and height
+                                  ),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red), // Adjust color as needed
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   )
                 ),
