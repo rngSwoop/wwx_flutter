@@ -72,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       context.loaderOverlay.show();
                       final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
                       if (newUser != null) {
-                        Navigator.pushNamed(context, kBuoysScreenId);
+                        Navigator.pushNamed(context, kDashboardScreenId);
                       }
                     } catch (e) {
                       setState(() {

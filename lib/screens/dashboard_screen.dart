@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import './shared/MockHttpClient.dart';
 import 'package:http/http.dart' as http; // For when API endpoint is set up
 import 'dart:convert';
+import './buoys_screen.dart'; // Import buoys_screen.dart which contains our bluetooth functionality
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -117,59 +118,83 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            'My Buoys',
+    return DefaultTabController(
+      length: 2, // Number of tabs (My Buoys and Near Me)
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Buoy Dashboard',
             style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: kThemeBlue,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: _refreshData,
-              child: ListView.builder(
-                itemCount: authBuoys.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      print('Gesture Detected for index $index');
-                      //Handle selection of a specific buoy
-                      Navigator.pushNamed(
-                        context,
-                        kBuoyDetailsScreenId,
-                        arguments: authBuoys[index], // Pass the selected buoy data
-                      );
-                    },
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Text(
-                            authBuoys[index].name,
-                            style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                          subtitle: Text(
-                            authBuoys[index].authLevel,
-                            style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          // Add more details or actions as needed
-                        ),
-                        const Divider(
-                          color: Colors.grey,
-                          height: 1,
-                          thickness: 1,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
           ),
-        ],
+          backgroundColor: kThemeBlue,
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'My Buoys'),
+              Tab(text: 'Near Me'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            // My Buoys Tab
+            _buildMyBuoysTab(),
+            // Near Me Tab (You can add your Near Me content here)
+            _buildNearMeTab(),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _buildMyBuoysTab() {
+    return Column(
+      children: [
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: _refreshData,
+            child: ListView.builder(
+              itemCount: authBuoys.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    print('Gesture Detected for index $index');
+                    // Handle selection of a specific buoy
+                    Navigator.pushNamed(
+                      context,
+                      kBuoyDetailsScreenId,
+                      arguments: authBuoys[index], // Pass the selected buoy data
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          authBuoys[index].name,
+                          style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w500),
+                        ),
+                        subtitle: Text(
+                          authBuoys[index].authLevel,
+                          style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        // Add more details or actions as needed
+                      ),
+                      const Divider(
+                        color: Colors.grey,
+                        height: 1,
+                        thickness: 1,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNearMeTab() {
+    return BluetoothScan(); // Return an instance of BluetoothScan
   }
 }

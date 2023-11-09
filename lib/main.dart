@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         kLoginScreenId: (context) => LoginScreen(),
         kRegisterScreenId: (context) => RegisterScreen(),
-        kBuoysScreenId: (context) => BuoysScreen(),
+        kBluetoothScanId: (context) => BluetoothScan(),
         kDashboardScreenId: (context) => DashboardScreen(),
         // kIndividualBuoyScreen: (context) => IndividualBuoyScreen()
       },

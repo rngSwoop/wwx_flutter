@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // Route IDs
 const kLoginScreenId = 'login_screen';
 const kRegisterScreenId = 'register_screen';
-const kBuoysScreenId = 'buoys_screen.dart';
+const kBluetoothScanId = 'buoys_screen.dart';
 const kDataDisplayId = 'data_display_screen.dart';
 const kIndividualBuoyScreen = 'individual_buoy_screen.dart';
 const kDashboardScreenId = 'dashboard_screen.dart';

@@ -7,12 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-class BuoysScreen extends StatefulWidget {
+class BluetoothScan extends StatefulWidget {
   @override
-  State<BuoysScreen> createState() => _BuoysScreenState();
+  State<BluetoothScan> createState() => _BluetoothScanState();
 }
 
-class _BuoysScreenState extends State<BuoysScreen> {
+class _BluetoothScanState extends State<BluetoothScan> {
   var deviceList = [];
   var scanning = false;
   var scanButtonText = 'Start Scanning';
