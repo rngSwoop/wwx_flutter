@@ -4,6 +4,7 @@ import 'package:buoy_flutter/constants.dart';
 import './shared/auth_buoys.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class BuoyDetailsScreen extends StatelessWidget {
   final AuthBuoys selectedAuthBuoys; // Define the AuthBuoys object
@@ -17,17 +18,16 @@ class BuoyDetailsScreen extends StatelessWidget {
     var device;
     var subscription = flutterBlue.scanResults.listen((results) async {
       for (ScanResult result in results) {
-        // Extract normalizedMacAddress from this device.id
-        String uniqueIdentifier = result.device.id.toString();
-        String normalizedMacAddress = uniqueIdentifier.split(RegExp(r'[:-]')).take(6).join(":");
+        // Extract MAC address from this device.id
+        String foundMAC = result.device.id.toString();
+        print('Found device: $foundMAC');
 
-        if (normalizedMacAddress == macAddress) {
+        if (foundMAC == macAddress) {
           device = result.device;
           await device.connect();
           break;
         }
       }
-      // You can continue with other logic if the device is not found
     });
 
     // Set a timeout for scanning
@@ -40,6 +40,7 @@ class BuoyDetailsScreen extends StatelessWidget {
       // Device found and connected
       print('Connected to device: $macAddress');
       // Go to connected_screen.dart
+      //Navigator.pushNamed(IndividualBuoyScreen(device));
     } else {
       // Device not found
       print('Device not found: $macAddress');
