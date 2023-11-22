@@ -1,10 +1,11 @@
 class AuthBuoys {
-  String buoyID;
+  int buoyID;
   String name;
   String password;
   String authLevel;
   bool updated;
   String MAC;
+  int locationID;
   List<LocationDataPoint> locationData; // List of date and locationLatLong and locationName data points
 
   AuthBuoys({
@@ -14,6 +15,7 @@ class AuthBuoys {
     required this.authLevel,
     required this.updated,
     required this.MAC,
+    required this.locationID,
     required this.locationData, // Initialize with an empty list
   });
 
@@ -24,12 +26,13 @@ class AuthBuoys {
     List<LocationDataPoint> dataPoints = jsonData.map((map) => LocationDataPoint.fromJson(map)).toList();
 
     return AuthBuoys(
-      buoyID: json['buoyID'] as String,
+      buoyID: json['id'] as int,
       name: json['name'] as String,
       password: json['password'] as String,
       authLevel: json['authLevel'] as String,
       updated: json['updated'] as bool,
       MAC: json['MAC'] as String,
+      locationID: json['locationId'] as int,
       locationData: dataPoints,
     );
   }

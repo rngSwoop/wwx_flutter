@@ -1,3 +1,4 @@
+import 'package:buoy_flutter/screens/shared/buoy_ids.dart';
 import 'package:flutter/material.dart';
 import './shared/auth_buoys.dart';
 import 'package:buoy_flutter/constants.dart';
@@ -14,6 +15,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   List<AuthBuoys> authBuoys = []; // List of AuthBuoys
+  BuoyIDs buoyIDs = BuoyIDs(); // Create instance to our globally stored buoy variables
   final ScrollController _scrollController = ScrollController();
   bool isRefreshing = false;
 
@@ -22,6 +24,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
 
     _fetchData();
+
+    // Reset globally stored IDs, as the user is yet to select a buoy
+    _resetBuoyIDs();
 
     // Attach a listener to the scroll controller to detect when the user scrolls to the top
     _scrollController.addListener(() {
@@ -92,6 +97,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
+  // Reset globally stored buoy IDs when user navigates to this screen
+  void _resetBuoyIDs() {
+    // Reset BuoyIDs to default values
+    buoyIDs.updateIDs(-1, -1); // Reset to -1
+    print('Set buoyID: ${buoyIDs.buoyID}, locationID: ${buoyIDs.locationID}');
+  }
+
   // Function to create consistent styled buttons
   ElevatedButton styledButton({
     required String text,
@@ -158,6 +170,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 return GestureDetector(
                   onTap: () {
                     print('Gesture Detected for index $index');
+                    // Update globally stored buoyID and locationID to this buoy
+                    buoyIDs.updateIDs(authBuoys[index].buoyID, authBuoys[index].locationID);
+                    print('Set buoyID: ${buoyIDs.buoyID}, locationID: ${buoyIDs.locationID}');
                     // Handle selection of a specific buoy
                     Navigator.pushNamed(
                       context,
@@ -173,7 +188,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w500),
                         ),
                         subtitle: Text(
-                          authBuoys[index].authLevel,
+                          '${authBuoys[index].authLevel} - ${authBuoys[index].locationID} - ${authBuoys[index].buoyID}',
                           style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         // Add more details or actions as needed

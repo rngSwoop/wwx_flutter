@@ -9,12 +9,13 @@ class MockHttpClient {
     // Simulate an API response with JSON data
     final jsonResponse = [
       {
-        "buoyID": "1234",
+        "id": 1234,
         "name": "Buoy 1",
         "password": "password1",
         "authLevel": "user",
         "updated": true,
         "MAC": "00:11:22:33:44:55",
+        "locationId": 123,
         "locationData": [
           {
             "date": "2023-10-15",
@@ -79,12 +80,13 @@ class MockHttpClient {
         ]
       },
       {
-        "buoyID": "12983t",
+        "id": 12983,
         "name": "Buoy 2",
         "password": "password2",
         "authLevel": "manager",
         "updated": true,
         "MAC": "A1:B2:C3:D4:E5:F6",
+        "locationId": 456,
         "locationData": [
           {
             "date": "2023-10-15",
@@ -109,12 +111,13 @@ class MockHttpClient {
         ]
       },
       {
-        "buoyID": "w9348652",
+        "id": 9348652,
         "name": "Buoy 3",
         "password": "password3",
         "authLevel": "owner",
         "updated": false,
         "MAC": "12:34:56:78:9A:BC",
+        "locationId": 789,
         "locationData": [
           {
             "date": "2023-10-15",

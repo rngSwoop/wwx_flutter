@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:buoy_flutter/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import './shared/buoy_ids.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -18,6 +19,7 @@ class DataDisplayScreen extends StatefulWidget {
 
 class _DataDisplayState extends State<DataDisplayScreen> {
   List<BuoyData> data;
+  BuoyIDs buoyIDs = BuoyIDs();
   _DataDisplayState(this.data);
 
   var dummyData = [BuoyData(1, 2, 3, 4, 5, 6, 7), BuoyData(11, 12, 13, 14, 15, 16, 17)];
@@ -32,12 +34,16 @@ class _DataDisplayState extends State<DataDisplayScreen> {
     List<String> collectedData = [];
     for (int i = 0; i < data.length; i++) {
       collectedData.add(data[i].time.toString());  // type casting to strings might be needed
-      collectedData.add(data[i].temp1.toString());
+      collectedData.add(data[i].temp1.toString()); // shallow temp
+      collectedData.add(data[i].light.toString());  // I think this is surface insolation
+      collectedData.add(data[i].salinity.toString());
       collectedData.add(data[i].temp2.toString());
       collectedData.add(data[i].temp3.toString());
-      collectedData.add(data[i].salinity.toString());
-      collectedData.add(data[i].light.toString());
-      collectedData.add(data[i].turbidity.toString());
+      collectedData.add(data[i].turbidity.toString()); // Need to add another turbidity, this first one would be shallow
+      // depth turbidity
+      // depth salinity
+      collectedData.add(buoyIDs.locationID.toString());
+
 
       //Fill out groupDummy, locationDummy, userDummy and buoyDummy proportionally to actual data array
       groupDummy.add("Erik Fretheim");

@@ -4,6 +4,7 @@ import 'package:buoy_flutter/constants.dart';
 import './shared/auth_buoys.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:buoy_flutter/screens/data_display_screen.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class BuoyDetailsScreen extends StatelessWidget {
@@ -50,6 +51,7 @@ class BuoyDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
