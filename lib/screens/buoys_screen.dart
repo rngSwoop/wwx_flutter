@@ -105,17 +105,17 @@ class _BluetoothScanState extends State<BluetoothScan> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // startScan();
+                      startScan();
 
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            // Currently, the StartScan button skips the data grab in individual_buoy_screen
-                            // and brings us straight to data_display_screen with dummy data. This button should maybe be removed altogether
-                            // given that we automatically scan in the init state. If we are routed to this buoys_screen, the scan starts automatically.
-                              builder: (context) => DataDisplayScreen(dataPoints)
-                          )
-                      );
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       // Currently, the StartScan button skips the data grab in individual_buoy_screen
+                      //       // and brings us straight to data_display_screen with dummy data. This button should maybe be removed altogether
+                      //       // given that we automatically scan in the init state. If we are routed to this buoys_screen, the scan starts automatically.
+                      //         builder: (context) => DataDisplayScreen(dataPoints)
+                      //     )
+                      // );
                     },
                     child: Text(
                       "Start Scan",

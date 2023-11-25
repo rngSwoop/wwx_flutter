@@ -14,7 +14,7 @@ class MockHttpClient {
         "password": "password1",
         "authLevel": "user",
         "updated": true,
-        "MAC": "00:11:22:33:44:55",
+        "MAC": "34:98:7A:4C:D4:46",
         "locationId": 123,
         "locationData": [
           {

@@ -169,7 +169,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    print('Gesture Detected for index $index');
                     // Update globally stored buoyID and locationID to this buoy
                     buoyIDs.updateIDs(authBuoys[index].buoyID, authBuoys[index].locationID);
                     print('Set buoyID: ${buoyIDs.buoyID}, locationID: ${buoyIDs.locationID}');
