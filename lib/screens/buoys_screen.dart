@@ -65,15 +65,15 @@ class _BluetoothScanState extends State<BluetoothScan> {
     });
   }
 
-  List<BuoyData> dataPoints = [BuoyData(
-    12,  // TIME
-    14,  // TEMP1
-    15,  // TEMP2
-    14,  // TEMP3
-    37,  // SALINITY (RANGE FROM 0-80) (Dead Sea is ~342)
-    500, // LIGHT (IN LUX) (100 - 1000 is avg range at 6ft)
-    15  // TURBIDITY (Clear Ocean water 6ft below is 0.1 - 1 NTU, rivers and streams can be 10 to 100
-  )];
+  // List<BuoyData> dataPoints = [BuoyData(
+  //   12,  // TIME
+  //   14,  // TEMP1
+  //   15,  // TEMP2
+  //   14,  // TEMP3
+  //   37,  // SALINITY (RANGE FROM 0-80) (Dead Sea is ~342)
+  //   500, // LIGHT (IN LUX) (100 - 1000 is avg range at 6ft)
+  //   15  // TURBIDITY (Clear Ocean water 6ft below is 0.1 - 1 NTU, rivers and streams can be 10 to 100
+  // )];
 
   @override
   Widget build(BuildContext context) {

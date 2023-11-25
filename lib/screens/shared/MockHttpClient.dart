@@ -10,7 +10,7 @@ class MockHttpClient {
     final jsonResponse = [
       {
         "id": 1234,
-        "name": "Buoy 1",
+        "name": "Proto",
         "password": "password1",
         "authLevel": "user",
         "updated": true,
@@ -81,11 +81,11 @@ class MockHttpClient {
       },
       {
         "id": 12983,
-        "name": "Buoy 2",
+        "name": "Proto2",
         "password": "password2",
-        "authLevel": "manager",
+        "authLevel": "owner",
         "updated": true,
-        "MAC": "A1:B2:C3:D4:E5:F6",
+        "MAC": "08:3A:F2:5B:D8:46",
         "locationId": 456,
         "locationData": [
           {

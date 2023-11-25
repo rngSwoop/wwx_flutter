@@ -22,7 +22,7 @@ class _DataDisplayState extends State<DataDisplayScreen> {
   BuoyIDs buoyIDs = BuoyIDs();
   _DataDisplayState(this.data);
 
-  var dummyData = [BuoyData(1, 2, 3, 4, 5, 6, 7), BuoyData(11, 12, 13, 14, 15, 16, 17)];
+  var dummyData = [BuoyData(1, 2, 3, 4, 5, 6, 7, 8, 9), BuoyData(11, 12, 13, 14, 15, 16, 17, 18, 19)];
 
   var groupDummy = [];      // group name
   var locationDummy = [];   // location, latitude, longitude
@@ -182,7 +182,7 @@ class _DataDisplayState extends State<DataDisplayScreen> {
                                 child: Text("Send Data"),
                                 style: ButtonStyle(
                                   fixedSize: MaterialStateProperty.all<Size>(
-                                    Size(150.0, 50.0), // Set the width and height
+                                    Size(120.0, 50.0), // Set the width and height
                                   ),
                                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
@@ -200,7 +200,7 @@ class _DataDisplayState extends State<DataDisplayScreen> {
                                 child: Text("Disconnect"),
                                 style: ButtonStyle(
                                   fixedSize: MaterialStateProperty.all<Size>(
-                                    Size(150.0, 50.0), // Set the width and height
+                                    Size(120.0, 50.0), // Set the width and height
                                   ),
                                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(

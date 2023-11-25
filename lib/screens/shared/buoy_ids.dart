@@ -1,6 +1,8 @@
 class BuoyIDs {
   int buoyID = -1;
   int locationID = -1;
+  String authLevel = '';
+  String name = '';
 
   // Singleton setup
   static final BuoyIDs _singleton = BuoyIDs._internal();
@@ -12,8 +14,10 @@ class BuoyIDs {
   BuoyIDs._internal();
 
   // Methods to update IDs
-  void updateIDs(int buoyID, int locationID) {
+  void updateIDs(int buoyID, int locationID, String authLevel, String name) {
     this.buoyID = buoyID;
     this.locationID = locationID;
+    this.authLevel = authLevel;
+    this.name = name;
   }
 }

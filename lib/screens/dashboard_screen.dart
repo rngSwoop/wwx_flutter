@@ -100,8 +100,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // Reset globally stored buoy IDs when user navigates to this screen
   void _resetBuoyIDs() {
     // Reset BuoyIDs to default values
-    buoyIDs.updateIDs(-1, -1); // Reset to -1
-    print('Set buoyID: ${buoyIDs.buoyID}, locationID: ${buoyIDs.locationID}');
+    buoyIDs.updateIDs(-1, -1, '', ''); // Reset to -1
+    print('Set buoyID: ${buoyIDs.buoyID}, locationID: ${buoyIDs.locationID}, authLevel: ${buoyIDs.authLevel}, name: ${buoyIDs.name}');
   }
 
   // Function to create consistent styled buttons
@@ -170,8 +170,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 return GestureDetector(
                   onTap: () {
                     // Update globally stored buoyID and locationID to this buoy
-                    buoyIDs.updateIDs(authBuoys[index].buoyID, authBuoys[index].locationID);
-                    print('Set buoyID: ${buoyIDs.buoyID}, locationID: ${buoyIDs.locationID}');
+                    buoyIDs.updateIDs(authBuoys[index].buoyID, authBuoys[index].locationID, authBuoys[index].authLevel, authBuoys[index].name);
+                    print('Set buoyID: ${buoyIDs.buoyID}, locationID: ${buoyIDs.locationID}, authLevel: ${buoyIDs.authLevel}, name: ${buoyIDs.name}');
                     // Handle selection of a specific buoy
                     Navigator.pushNamed(
                       context,
