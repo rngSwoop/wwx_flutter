@@ -111,6 +111,10 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
 
     }
 
+    // Disconnect from the device before going to Data Display
+    // If we pass the device to the Data Display screen, we could perform a proper disconnect there
+    // But it should be sufficient to disconnect before navigating
+    device.disconnect();
 
     Navigator.push(
         context,
@@ -152,7 +156,7 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
   Widget build(BuildContext context) {
     var dataPoints = [
       BuoyData(
-          0,
+          70,
           13,
           14,
           14,
@@ -178,12 +182,14 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 8),
-                  Text(
-                    // connect to device, start record and immediately disconnect
-                    'Add instructions here',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0), // Adjust the horizontal padding here
+                    child: Text(
+                      '1. To record data, press Start Record and immediately Disconnect\n\n2. After 60 seconds, wake up device by pressing blue button on buoy\n\n3. Reconnect to buoy and press Collect Recorded Data',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -319,7 +325,14 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      collectRecordedData();
+                                      // collectRecordedData();
+
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => DataDisplayScreen(dataPoints)
+                                          )
+                                      );
                                     },
                                     child: Text(
                                       "Collect Recorded Data",
