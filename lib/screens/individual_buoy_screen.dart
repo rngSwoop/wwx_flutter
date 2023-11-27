@@ -77,8 +77,36 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
     });
 
     List<int> val = await c2!.read();
-    print('VALUE1: $val'); // This appears to be the first read from the buoy, the total length of data instances
+    print('VALUE1: $val'); // val[0] contains the number of data instances, this is what we loop to in the for loop below
 
+    // Correct output in flutter for 2 instances looks like:
+    // I/flutter (14293): RAW DATA FROM THE BUOY [94, 4, 0, 0, 36, 0, 8, 0, 57, 0, 0, 0, 1, 0, 1, 0, 0, 0, 184, 11]
+    // I/flutter (14293): time: 1118
+    // I/flutter (14293): temp1: 36
+    // I/flutter (14293): temp2: 8
+    // I/flutter (14293): temp3: 57
+    // I/flutter (14293): salinity: 0
+    // I/flutter (14293): salinity2: 1
+    // I/flutter (14293): light: 1
+    // I/flutter (14293): turbidity1: 0
+    // I/flutter (14293): turbidity2: 3000
+    // I/flutter (14293): remoteId: 08:3A:F2:5B:D8:46 characteristicUuid: 0000abc1-0000-1000-8000-00805f9b34fb serviceUuid: 44332211-4433-2211-4433-221144332211
+    // D/FlutterBluePlugin(14293): [onCharacteristicRead] uuid: 0000abc1-0000-1000-8000-00805f9b34fb status: 0
+    // I/flutter (14293): RAW DATA FROM THE BUOY [139, 4, 0, 0, 40, 0, 16, 0, 67, 0, 0, 0, 1, 0, 1, 0, 0, 0, 184, 11]
+    // I/flutter (14293): time: 1163
+    // I/flutter (14293): temp1: 40
+    // I/flutter (14293): temp2: 16
+    // I/flutter (14293): temp3: 67
+    // I/flutter (14293): salinity: 0
+    // I/flutter (14293): salinity2: 1
+    // I/flutter (14293): light: 1
+    // I/flutter (14293): turbidity1: 0
+    // I/flutter (14293): turbidity2: 3000
+    //
+    // The issue is that the buoy appears to only send one instance at a time. We were able to record two instances by
+    // waking up the buoy (pressing down on the chip on the buoy) towards the end of an ongoing read to know that
+    // this code would work for multiple instances of data. It appears that sending one instance of data is what the
+    // buoy is currently designed to do.
     List<BuoyData> dataPoints = [];
     for (var i = 0; i < val[0]; i++) {  // from i = 0 to length of data instances
       List<int> rawData = await c2!.read();  // read this instance of raw data
@@ -95,6 +123,8 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
       print('turbidity2: ${rawData[18] | (rawData[19] << 8)}');
 
 
+      // 32 bits for seconds, 16 bits for all other sensors. On the buoy, the sensors read data into floats(32 bits),
+      // but when it sends the data, it sends them in ints(16 bits). At least this is how it appears to work.
       dataPoints.add(
           BuoyData(
               rawData[0] | (rawData[1] << 8) | (rawData[2] << 16) | (rawData[3] << 24), // SECONDS
@@ -124,14 +154,17 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
     );
   }
 
+  // Called in the Change Location button, still needs implementation
   void handleLocation() {
 
   }
 
+  // Called in the Change Password button, still needs implementation
   void handlePassword() {
 
   }
 
+  // If the user is not an owner or manager of the buoy, do not allow them to edit password/location
   void showPermissionDeniedDialog(BuildContext context, String locationOrPassword) {
     showDialog(
       context: context,
@@ -154,6 +187,7 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // For debugging, remove dataPoints below if collecting real data
     var dataPoints = [
       BuoyData(
           70,
@@ -327,6 +361,8 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
                                     onPressed: () {
                                       // collectRecordedData();
 
+                                      // For debugging purposes, just route the user to the data display
+                                      // For proper use, remove the navigator below and uncomment collectRecordedData(); above
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
