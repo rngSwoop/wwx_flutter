@@ -141,7 +141,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           backgroundColor: kThemeBlue,
           bottom: TabBar(
             tabs: [
-              Tab(text: 'My Buoys'),
+              Tab(text: 'Authorized Buoys'),
               Tab(text: 'Near Me'),
             ],
           ),
@@ -187,7 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w500),
                         ),
                         subtitle: Text(
-                          '${authBuoys[index].authLevel} - ${authBuoys[index].locationID} - ${authBuoys[index].buoyID}',
+                          '${authBuoys[index].authLevel} - ${authBuoys[index].MAC}',
                           style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         // Add more details or actions as needed
