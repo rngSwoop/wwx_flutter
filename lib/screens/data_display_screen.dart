@@ -12,7 +12,6 @@ class DataDisplayScreen extends StatefulWidget {
   List<BuoyData> data;
   DataDisplayScreen(this.data);
 
-
   @override
   State<DataDisplayScreen> createState() {
     return _DataDisplayState(this.data);

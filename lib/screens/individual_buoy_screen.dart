@@ -187,18 +187,23 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // For debugging, remove dataPoints below if collecting real data. This just allows us to navigate to data display
+    // For debugging, remove dataPoints below if collecting real data, this just allows us to navigate to data display
     var dataPoints = [
-      BuoyData(
-          70,
-          13,
-          14,
-          14,
-          32,
-          80,
-          5,
-          6,
-          7)
+      BuoyData(300, 20, 26, 32, 25, 31, 110, 45, 38),
+      BuoyData(600, 19, 24, 31, 24, 30, 105, 47, 40),
+      BuoyData(900, 21, 25, 29, 26, 32, 102, 43, 36),
+      BuoyData(1200, 18, 23, 30, 23, 29, 100, 46, 39),
+      BuoyData(1500, 22, 27, 33, 27, 33, 108, 44, 37),
+      BuoyData(1800, 19, 26, 32, 25, 31, 109, 42, 35),
+      BuoyData(2100, 20, 24, 31, 24, 30, 107, 48, 41),
+      BuoyData(2400, 21, 25, 30, 26, 32, 101, 45, 38),
+      BuoyData(2700, 18, 23, 30, 23, 29, 106, 47, 40),
+      BuoyData(3000, 22, 27, 33, 27, 33, 103, 43, 36),
+      BuoyData(3300, 19, 26, 32, 25, 31, 104, 46, 39),
+      BuoyData(3600, 20, 24, 31, 24, 30, 111, 44, 37),
+      BuoyData(3900, 21, 25, 29, 26, 32, 107, 42, 35),
+      BuoyData(4200, 18, 23, 30, 23, 29, 102, 48, 41),
+      BuoyData(4500, 22, 27, 33, 27, 33, 105, 45, 38),
     ];
 
     return Scaffold(

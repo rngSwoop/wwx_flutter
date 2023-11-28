@@ -18,7 +18,6 @@ class BuoyDetailsScreen extends StatelessWidget {
 
   Future<BluetoothDevice?> connectToDevice(BuildContext context, String macAddress) async {
     try {
-      // context.loaderOverlay.show();
       var device;
       var subscription = flutterBlue.scanResults.listen((results) async {
         for (ScanResult result in results) {
@@ -37,12 +36,10 @@ class BuoyDetailsScreen extends StatelessWidget {
       await Future.delayed(Duration(seconds: 5));
 
       subscription.cancel();
-      // context.loaderOverlay.hide();
 
       return device;
     } catch (e) {
       print('Error connecting to device: $e');
-      // context.loaderOverlay.hide();
       return null;
     }
   }
@@ -156,16 +153,16 @@ class BuoyDetailsScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Commented out for debugging
-                    //onPressed(context, selectedAuthBuoys.MAC);
+                    // Comment out for debugging
+                    onPressed(context, selectedAuthBuoys.MAC);
 
                     // Remove navigation for actual use
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DataDisplayScreen(dataPoints)
-                        )
-                    );
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => DataDisplayScreen(dataPoints)
+                    //     )
+                    // );
                   },
                   child: Text(
                     "Connect",
