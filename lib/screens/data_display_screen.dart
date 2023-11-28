@@ -12,6 +12,7 @@ class DataDisplayScreen extends StatefulWidget {
   List<BuoyData> data;
   DataDisplayScreen(this.data);
 
+
   @override
   State<DataDisplayScreen> createState() {
     return _DataDisplayState(this.data);
@@ -23,11 +24,43 @@ class _DataDisplayState extends State<DataDisplayScreen> {
   _DataDisplayState(this.data);
   BuoyIDs buoyIDs = BuoyIDs();
 
-  var dummyData = [BuoyData(21, 22, 23, 24, 25, 26, 27, 28, 29), BuoyData(31, 32, 33, 34, 35, 36, 37, 38, 39)];
+  late String currentDateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    // Set current date and time when the screen initializes
+    setCurrentDateTime();
+  }
+
+  void setCurrentDateTime() {
+    DateTime now = DateTime.now();
+    setState(() {
+      currentDateTime = "Data Collected at ${_formatTime(now)} on ${_formatDate(now)}";
+    });
+  }
+
+  String _formatTime(DateTime dateTime) {
+    int hour = dateTime.hour;
+    String period = 'AM';
+    if (hour > 12) {
+      hour -= 12;
+      period = 'PM';
+    } else if (hour == 0) {
+      hour = 12;
+    }
+    return '$hour:${dateTime.minute < 10 ? '0${dateTime.minute}' : dateTime.minute} $period';
+  }
+
+  String _formatDate(DateTime dateTime) {
+    return '${dateTime.month}/${dateTime.day}/${dateTime.year}';
+  }
+
+  //var dummyData = [BuoyData(21, 22, 23, 24, 25, 26, 27, 28, 29), BuoyData(31, 32, 33, 34, 35, 36, 37, 38, 39)];
 
  // '${data[0].time}, ${data[0].temp1}, ${data[0].temp2}, ${data[0].temp3}, ${data[0].salinity}, ${data[0].light}, ${data[0].turbidity}'
+  List<Map<String, dynamic>> formattedData = [];
   List<Map<String, dynamic>> formatData(List<BuoyData> data) {
-    List<Map<String, dynamic>> formattedData = [];
 
     for (int i = 0; i < data.length; i++) {
       var jsonData = {
@@ -46,7 +79,6 @@ class _DataDisplayState extends State<DataDisplayScreen> {
     print(formattedData);
     return formattedData;
   }
-
 
   postData () async {
     // Once we get actual data we want to change dummyData to our actual data list
@@ -78,120 +110,132 @@ class _DataDisplayState extends State<DataDisplayScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
+            Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 5),
               child: Container(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        height: 100,
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            "Data Collected at 5:56 p.m. on April 27, 2023",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      DataCard(
-                        "Temperature",
-                        "°F",
-                        0,
-                        180,
-                        (((data[0].temp1.toDouble() + data[0].temp2.toDouble() + data[0].temp3.toDouble()) / 3.0) * (9/5)) + 32,
-                      ),
-                      DataCard(
-                        "Salinity",
-                        "g/L",
-                        0,
-                        80,
-                        data[0].salinity.toDouble(),
-                      ),
-                      DataCard(
-                        "Light",
-                        "lux",
-                        0,
-                        1000,
-                        data[0].light.toDouble()
-                      ),
-                      DataCard(
-                        "Turbidity",
-                        "NTU",
-                        0,
-                        100,
-                        data[0].turbidity.toDouble()
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16, bottom: 16),
-                        child: Container(
-                          padding: EdgeInsets.only(left: 16, right: 16, bottom: 8.0, top: 8.0),
-                          height: 80.0,
-                          width: double.infinity,
-                          child: Row( // Wrap the buttons in a Row
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Adjust alignment as needed
-                            children: [
-                              ElevatedButton(
-                                // Send data to server
-                                onPressed: () async {
-                                  var response = await postData();
-                                  // Display our response from the server
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) => AlertDialog(
-                                      insetPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 175),
-                                      title: Text("Response From Server:"),
-                                      content: Text("$response"),
-                                      elevation: 24.0,
-                                      scrollable: true,
-                                    ),
-                                    barrierDismissible: true,
-                                  );
-                                },
-                                child: Text("Send Data"),
-                                style: ButtonStyle(
-                                  fixedSize: MaterialStateProperty.all<Size>(
-                                    Size(120.0, 50.0), // Set the width and height
-                                  ),
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                  ),
-                                  backgroundColor: MaterialStateProperty.all<Color>(kThemeBlue),
-                                ),
-                              ),
-                              ElevatedButton(
-                                // Disconnect action
-                                onPressed: () {
-                                  Navigator.pushNamed(context, kDashboardScreenId);
-                                },
-                                child: Text("Disconnect"),
-                                style: ButtonStyle(
-                                  fixedSize: MaterialStateProperty.all<Size>(
-                                    Size(120.0, 50.0), // Set the width and height
-                                  ),
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                  ),
-                                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red), // Adjust color as needed
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
+                color: Colors.white,
+                height: 85,
+                width: double.infinity,
+                child: Center(
+                  child: Text(
+                    currentDateTime ?? "",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
-
+            Expanded(
+              child: ListView(
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: MediaQuery.of(context).size.width,
+                      ),
+                      child: DataTable(
+                        columns: [
+                          DataColumn(label: Text('Timestamp', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Surf Temp', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Shallow Temp', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Depth Temp', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Insolation', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Shallow Salinity', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Depth Salinity', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Shallow Turbidity', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Depth Turbidity', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('Location ID', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold),)),
+                        ],
+                        rows: List.generate(
+                          data.length,
+                              (index) {
+                            final currentData = data[index];
+                            return DataRow(
+                              color: MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                  // Alternate row colors
+                                  if (index.isEven) {
+                                    return Colors.white;
+                                  } else {
+                                    return Colors.grey[200]!;
+                                  }
+                                },
+                              ),
+                              cells: [
+                                DataCell(Text('${currentData.time.toString()} sec', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text('${currentData.temp1} °C', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text('${currentData.temp2} °C', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text('${currentData.temp3} °C', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text('${currentData.light} lux', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text('${currentData.salinity} g/L', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text('${currentData.salinity2} g/L', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text('${currentData.turbidity} NTU', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text('${currentData.turbidity2} NTU', style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                                DataCell(Text(buoyIDs.locationID.toString(), style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500))),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      var response = await postData();
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          insetPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 175),
+                          title: Text("Response From Server:"),
+                          content: Text("$response"),
+                          elevation: 24.0,
+                          scrollable: true,
+                        ),
+                        barrierDismissible: true,
+                      );
+                    },
+                    child: Text("Send Data"),
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all<Size>(
+                        Size(120.0, 50.0),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(kThemeBlue),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, kDashboardScreenId);
+                    },
+                    child: Text("Disconnect"),
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all<Size>(
+                        Size(120.0, 50.0),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
