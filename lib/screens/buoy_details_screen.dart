@@ -92,6 +92,9 @@ class BuoyDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // For debugging, remove dataPoints below if collecting real data, this just allows us to navigate to data display
+    var dataPoints = [BuoyData(1, 2, 3, 4, 5, 6, 7, 8, 9), BuoyData(11, 12, 13, 14, 15, 16, 17, 18, 19)];
+
     return LoaderOverlay(
       overlayWidget: Center(
         child: CircularProgressIndicator(), // Customize your loader here
@@ -137,7 +140,16 @@ class BuoyDetailsScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    onPressed(context, selectedAuthBuoys.MAC);
+                    // Commented out for debugging
+                    //onPressed(context, selectedAuthBuoys.MAC);
+
+                    // Remove navigation for actual use
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DataDisplayScreen(dataPoints)
+                        )
+                    );
                   },
                   child: Text(
                     "Connect",

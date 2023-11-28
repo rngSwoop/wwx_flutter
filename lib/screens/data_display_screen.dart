@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import './shared/buoy_ids.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 
 class DataDisplayScreen extends StatefulWidget {
@@ -19,78 +20,49 @@ class DataDisplayScreen extends StatefulWidget {
 
 class _DataDisplayState extends State<DataDisplayScreen> {
   List<BuoyData> data;
-  BuoyIDs buoyIDs = BuoyIDs();
   _DataDisplayState(this.data);
+  BuoyIDs buoyIDs = BuoyIDs();
 
-  var dummyData = [BuoyData(1, 2, 3, 4, 5, 6, 7, 8, 9), BuoyData(11, 12, 13, 14, 15, 16, 17, 18, 19)];
-
-  var groupDummy = [];      // group name
-  var locationDummy = [];   // location, latitude, longitude
-  var userDummy = [];       // username, hashed password, group
-  var buoyDummy = [];       // buoy name, MAC address, groupID, locID
+  var dummyData = [BuoyData(21, 22, 23, 24, 25, 26, 27, 28, 29), BuoyData(31, 32, 33, 34, 35, 36, 37, 38, 39)];
 
  // '${data[0].time}, ${data[0].temp1}, ${data[0].temp2}, ${data[0].temp3}, ${data[0].salinity}, ${data[0].light}, ${data[0].turbidity}'
-  List<String> formatData(List<BuoyData> data) {
-    List<String> collectedData = [];
+  List<Map<String, dynamic>> formatData(List<BuoyData> data) {
+    List<Map<String, dynamic>> formattedData = [];
+
     for (int i = 0; i < data.length; i++) {
-      collectedData.add(data[i].time.toString());  // type casting to strings might be needed
-      collectedData.add(data[i].temp1.toString()); // shallow temp
-      collectedData.add(data[i].light.toString());  // I think this is surface insolation
-      collectedData.add(data[i].salinity.toString());
-      collectedData.add(data[i].temp2.toString());
-      collectedData.add(data[i].temp3.toString());
-      collectedData.add(data[i].turbidity.toString()); // Need to add another turbidity, this first one would be shallow
-      // depth turbidity
-      // depth salinity
-      collectedData.add(buoyIDs.locationID.toString());
+      var jsonData = {
+        "timestamp": data[i].time.toString(),
+        "surfTemp": data[i].temp1,
+        "surfInsolation": data[i].light,
+        "shallowSalinity": data[i].salinity,
+        "shallowTemp": data[i].temp2,
+        "depthTemp": data[i].temp3,
+        "depthTurbidity": data[i].turbidity,
+        "locationId": buoyIDs.locationID,
+      };
 
-
-      //Fill out groupDummy, locationDummy, userDummy and buoyDummy proportionally to actual data array
-      groupDummy.add("Erik Fretheim");
-      locationDummy.add("Boulevard Park");
-      locationDummy.add("latitude");
-      locationDummy.add("longitude");
-      buoyDummy.add("buoy1");
-      buoyDummy.add("00-B0-D0-63-C2-26");
-      buoyDummy.add("1");
-      buoyDummy.add("null");
-
-      // Alternate user data between Kaitlyn, Garrett and Emma
-      if (i % 3 == 0) {
-        userDummy.add("Kaitlyn Rice");
-        userDummy.add("5994471abb0");
-        userDummy.add("1");
-      }
-      if (i % 3 == 1) {
-        userDummy.add("Garrett King");
-        userDummy.add("1112afcc18159");
-        userDummy.add("1");
-      }
-      if (i % 3 == 2) {
-        userDummy.add("Emma Geary");
-        userDummy.add("f6cc74b4f5");
-        userDummy.add("1");
-      }
+      formattedData.add(jsonData);
     }
-    return collectedData;
+    print(formattedData);
+    return formattedData;
   }
+
 
   postData () async {
     // Once we get actual data we want to change dummyData to our actual data list
-    var dumberData = formatData(dummyData);
+    var formattedData = formatData(data);
+
     //200 -- success, 400, 404, 500
     try {
       var response = await http.post(
-          //Here we want the actual website, this site just echos back what it receives
-          Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-          body: {
-            "groupData": groupDummy.toString(),
-            "locationData": locationDummy.toString(),
-            "userData": userDummy.toString(),
-            "buoyData": buoyDummy.toString(),
-            "collectedData": dumberData.toString(),
-          });
-      print(response.body);
+        //Here we want the actual website, this site just echos back what it receives
+        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(formattedData), // Convert data to JSON format
+      );
+      //print(response.body);
       return response.body;
     } catch(e) {
       print(e);

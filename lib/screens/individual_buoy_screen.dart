@@ -187,7 +187,7 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // For debugging, remove dataPoints below if collecting real data
+    // For debugging, remove dataPoints below if collecting real data. This just allows us to navigate to data display
     var dataPoints = [
       BuoyData(
           70,
