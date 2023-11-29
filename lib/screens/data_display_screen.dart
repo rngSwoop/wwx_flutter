@@ -64,13 +64,14 @@ class _DataDisplayState extends State<DataDisplayScreen> {
     for (int i = 0; i < data.length; i++) {
       var jsonData = {
         "timestamp": data[i].time.toString(),
-        "surfTemp": data[i].temp1,
-        "surfInsolation": data[i].light,
-        "shallowSalinity": data[i].salinity,
-        "shallowTemp": data[i].temp2,
-        "depthTemp": data[i].temp3,
-        "depthTurbidity": data[i].turbidity,
-        "locationId": buoyIDs.locationID,
+        "surfTemp": data[i].temp1.toDouble(),
+        "surfInsolation": data[i].light.toDouble(),
+        "shallowSalinity": data[i].salinity.toDouble(),
+        "shallowTemp": data[i].temp2.toDouble(),
+        "depthTemp": data[i].temp3.toDouble(),
+        "depthTurbidity": data[i].turbidity.toDouble(),
+        "locationId": 1,
+
       };
 
       formattedData.add(jsonData);
@@ -87,7 +88,7 @@ class _DataDisplayState extends State<DataDisplayScreen> {
     try {
       var response = await http.post(
         //Here we want the actual website, this site just echos back what it receives
-        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+        Uri.parse("http://172.24.25.205:8080/data"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

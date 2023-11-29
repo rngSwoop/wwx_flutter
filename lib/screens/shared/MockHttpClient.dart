@@ -15,7 +15,7 @@ class MockHttpClient {
         "authLevel": "user",
         "updated": true,
         "MAC": "34:98:7A:4C:D4:46",
-        "locationId": 123,
+        "locationId": 1,
         "locationData": [
           {
             "date": "2023-10-15",
@@ -86,7 +86,7 @@ class MockHttpClient {
         "authLevel": "owner",
         "updated": true,
         "MAC": "08:3A:F2:5B:D8:46",
-        "locationId": 456,
+        "locationId": 1,
         "locationData": [
           {
             "date": "2023-10-15",

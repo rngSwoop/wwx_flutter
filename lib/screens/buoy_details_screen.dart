@@ -154,15 +154,15 @@ class BuoyDetailsScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Comment out for debugging
-                    onPressed(context, selectedAuthBuoys.MAC);
+                    // onPressed(context, selectedAuthBuoys.MAC);
 
                     // Remove navigation for actual use
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => DataDisplayScreen(dataPoints)
-                    //     )
-                    // );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DataDisplayScreen(dataPoints)
+                        )
+                    );
                   },
                   child: Text(
                     "Connect",

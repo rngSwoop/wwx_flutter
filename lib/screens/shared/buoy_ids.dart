@@ -3,6 +3,7 @@ class BuoyIDs {
   int locationID = -1;
   String authLevel = '';
   String name = '';
+  String userEmail = '';
 
   // Singleton setup
   static final BuoyIDs _singleton = BuoyIDs._internal();
@@ -19,5 +20,9 @@ class BuoyIDs {
     this.locationID = locationID;
     this.authLevel = authLevel;
     this.name = name;
+  }
+
+  void updateEmail(String email) {
+    this.userEmail = email;
   }
 }

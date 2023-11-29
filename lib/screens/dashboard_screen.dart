@@ -4,6 +4,7 @@ import './shared/auth_buoys.dart';
 import 'package:buoy_flutter/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './shared/MockHttpClient.dart';
+import 'package:buoy_flutter/screens/shared/MockHttpClient2.dart';
 import 'package:http/http.dart' as http; // For when API endpoint is set up
 import 'dart:convert';
 import './buoys_screen.dart'; // Import buoys_screen.dart which contains our bluetooth functionality

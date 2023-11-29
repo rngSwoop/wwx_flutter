@@ -4,6 +4,7 @@ import 'register_screen.dart';
 import 'buoys_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:buoy_flutter/screens/shared/buoy_ids.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
+  BuoyIDs buoyIDs = BuoyIDs();
   // TODO: THIS IS FOR DEBUGGING - ONCE APP IS PUBLISHED, SET EMAIL AND PASSWORD TO EMPTY STRINGS
   String email = "admin@admin.com";
   String password = "123456";
@@ -74,6 +76,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       context.loaderOverlay.show();
                       final newUser = await _auth.signInWithEmailAndPassword(email: email, password: password);
                       if (newUser != null) {
+                        buoyIDs.updateEmail(email);
+                        print('Updated email: $email');
                         Navigator.pushNamed(context, kDashboardScreenId);
                       }
                     } catch (e) {
