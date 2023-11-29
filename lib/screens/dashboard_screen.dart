@@ -40,35 +40,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   // Fetch data via HTTP GET request
   // Update the 'authBuoys' list with fetched data
-  // Expected JSON-formatted data:
-  // [
-  //   {
-  //     "buoyID": "123",
-  //     "name": "Buoy 1",
-  //     "password": "password1",
-  //     "authLevel": "user",
-  //     "updated": true,
-  //     "locationData": [{date, locationLatLong, locationName},{...}]
-  //   },
-  //   // ... more objects ...
-  // ]
+  // Expected JSON-formatted data can be seen in ./shared/MockHttpClient2
   Future<void> _fetchData() async {
 
     // Create a mock HTTP client
     // Once API endpoint is set up, replace final mockClient = MockHttpClient(); with
     // final client = http.Client();
-    final mockClient = MockHttpClient();
+    final mockClient = MockHttpClient2();
 
     // Simulate an API call
     // Replace with client.get(Uri.parse('https://your-api-endpoint.com')).then((response)
     mockClient.get(Uri.parse('https://your-api-endpoint.com')).then((response) {
       if (response.statusCode == 200) {
-        // Parse the JSON response and populate the authBuoys list
-        final List<dynamic> jsonData = json.decode(response.body);
+        final Map<String, dynamic> jsonData = json.decode(response.body);
 
-        // Create AuthBuoys objects from JSON data
+        final List<dynamic> ownedBuoys = jsonData['ownedBuoys'];
+        final List<dynamic> managedBuoys = jsonData['managedBuoys'];
+        final List<dynamic> authorizedBuoys = jsonData['authorizedBuoys'];
+
+        // Combine all buoys into one list
+        final List<dynamic> allBuoys = [
+          ...ownedBuoys,
+          ...managedBuoys,
+          ...authorizedBuoys,
+        ];
+
         setState(() {
-          authBuoys = jsonData.map((map) => AuthBuoys.fromJson(map)).toList();
+          authBuoys = allBuoys.map((buoy) {
+            String authLevel;
+
+            if (ownedBuoys.contains(buoy)) {
+              authLevel = 'owner';
+            } else if (managedBuoys.contains(buoy)) {
+              authLevel = 'manager';
+            } else {
+              authLevel = 'user';
+            }
+
+            // build AuthBuoys objects, attaching our authLevel as a field of each object
+            return AuthBuoys.fromJson(
+              buoy as Map<String, dynamic>,
+              authLevel,
+            );
+          }).toList();
         });
       } else if (response.statusCode == 404) {
         // Handle 404 error (Not Found)

@@ -122,28 +122,29 @@ class BuoyDetailsScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: selectedAuthBuoys.locationData.length,
-                itemBuilder: (context, index) {
-                  final locationDataPoint = selectedAuthBuoys
-                      .locationData[index];
-                  return ListTile(
-                    title: Text(
-                      '${locationDataPoint.locationName}',
-                      style: GoogleFonts.lato(
-                          fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                    subtitle: Text(
-                      'Placed here on ${locationDataPoint
-                          .date}\n${locationDataPoint.locationLatLong}',
-                      style: GoogleFonts.lato(
-                          fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                  );
-                },
-              ),
-            ),
+            Text('this is test'),
+            // Expanded(
+            //   child: ListView.builder(
+            //     itemCount: selectedAuthBuoys.locationData.length,
+            //     itemBuilder: (context, index) {
+            //       final locationDataPoint = selectedAuthBuoys
+            //           .locationData[index];
+            //       return ListTile(
+            //         title: Text(
+            //           '${locationDataPoint.locationName}',
+            //           style: GoogleFonts.lato(
+            //               fontSize: 20, fontWeight: FontWeight.w500),
+            //         ),
+            //         subtitle: Text(
+            //           'Placed here on ${locationDataPoint
+            //               .date}\n${locationDataPoint.locationLatLong}',
+            //           style: GoogleFonts.lato(
+            //               fontSize: 16, fontWeight: FontWeight.w500),
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 16),
               child: Container(

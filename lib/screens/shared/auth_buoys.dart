@@ -1,60 +1,44 @@
 class AuthBuoys {
   int buoyID;
   String name;
-  String password;
-  String authLevel;
-  bool updated;
   String MAC;
+  String createdAt;
+  String updatedAt;
+  int groupId;
+  int userId;
   int locationID;
-  List<LocationDataPoint> locationData; // List of date and locationLatLong and locationName data points
+  String authLevel;
 
   AuthBuoys({
     required this.buoyID,
     required this.name,
-    required this.password,
-    required this.authLevel,
-    required this.updated,
     required this.MAC,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.groupId,
+    required this.userId,
     required this.locationID,
-    required this.locationData, // Initialize with an empty list
+    required this.authLevel,
   });
 
   // Constructor to convert json data to AuthBuoy objects
-  factory AuthBuoys.fromJson(Map<String, dynamic> json) {
-    // Extract date and location data from the JSON
-    List<dynamic> jsonData = json['locationData'] as List;
-    List<LocationDataPoint> dataPoints = jsonData.map((map) => LocationDataPoint.fromJson(map)).toList();
-
-    return AuthBuoys(
-      buoyID: json['id'] as int,
-      name: json['name'] as String,
-      password: json['password'] as String,
-      authLevel: json['authLevel'] as String,
-      updated: json['updated'] as bool,
-      MAC: json['MAC'] as String,
-      locationID: json['locationId'] as int,
-      locationData: dataPoints,
-    );
-  }
-}
-
-class LocationDataPoint {
-  String date;
-  String locationLatLong;
-  String locationName;
-
-  LocationDataPoint({
-    required this.date,
-    required this.locationLatLong,
-    required this.locationName,
-  });
-
-  // Constructor to convert JSON data to LocationDataPoint objects
-  factory LocationDataPoint.fromJson(Map<String, dynamic> json) {
-    return LocationDataPoint(
-      date: json['date'] as String,
-      locationLatLong: json['locationLatLong'] as String,
-      locationName: json['locationName'] as String,
-    );
+  factory AuthBuoys.fromJson(Map<String, dynamic> json, String authLevel) {
+    print('Parsing JSON: $json');
+    try {
+      return AuthBuoys(
+        buoyID: json['id'] as int,
+        name: json['name'] as String,
+        MAC: json['mac'] as String,
+        createdAt: json['createdAt'] as String,
+        updatedAt: json['updatedAt'] as String,
+        groupId: json['groupId'] as int,
+        userId: json['userId'] as int,
+        locationID: json['locationId'] as int,
+        authLevel: authLevel,
+      );
+    } catch (e) {
+      print('Error during parsing: $e');
+      rethrow; // Rethrow the exception for better visibility in the logs
+    }
   }
 }
