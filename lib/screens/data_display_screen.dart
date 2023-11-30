@@ -70,7 +70,7 @@ class _DataDisplayState extends State<DataDisplayScreen> {
         "shallowTemp": data[i].temp2.toDouble(),
         "depthTemp": data[i].temp3.toDouble(),
         "depthTurbidity": data[i].turbidity.toDouble(),
-        "locationId": 1,
+        "locationId": buoyIDs.locationID,
 
       };
 
@@ -87,7 +87,7 @@ class _DataDisplayState extends State<DataDisplayScreen> {
     //200 -- success, 400, 404, 500
     try {
       var response = await http.post(
-        //Here we want the actual website, this site just echos back what it receives
+        // Our API endpoint for sending data on the server
         Uri.parse("http://172.24.25.205:8080/data"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

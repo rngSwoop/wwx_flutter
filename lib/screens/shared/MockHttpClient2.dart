@@ -10,7 +10,7 @@ class MockHttpClient2 {
         {
           "id": 3,
           "name": "test",
-          "mac": "12:34:te:st:te:st",
+          "mac": "34:98:7A:4C:D4:46",
           "pubKey": null,
           "lastRetrieval": null,
           "version": null,
@@ -25,7 +25,7 @@ class MockHttpClient2 {
         {
           "id": 1,
           "name": "proto",
-          "mac": "FF-FF-FF-FF-FF-FF",
+          "mac": "08:3A:F2:5B:D8:46",
           "pubKey": null,
           "lastRetrieval": null,
           "version": null,

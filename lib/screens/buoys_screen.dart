@@ -178,52 +178,52 @@ class BluetoothItem extends StatelessWidget {
           onPressed: () async {
             // This is the existing working code to connect to nearby devices
             // This is commented out to begin implementation of requesting access
-            // try {
-            //   context.loaderOverlay.show();         // TODO: FIX THE FACT THAT THE context.loaderOverlay IS NOT SHOWING
-            //   await device.connect(); // CONNECTS TO DEVICE PRESSED
-            //   Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => IndividualBuoyScreen(device)
-            //       )
-            //   );
-            // } catch (e) {
-            //   print(e);         // TODO: DISPLAY ERROR MESSAGE INSTEAD PRINT IF NECESSARY
-            // }
-            //
-            // context.loaderOverlay.hide();
+            try {
+              context.loaderOverlay.show();         // TODO: FIX THE FACT THAT THE context.loaderOverlay IS NOT SHOWING
+              await device.connect(); // CONNECTS TO DEVICE PRESSED
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => IndividualBuoyScreen(device)
+                  )
+              );
+            } catch (e) {
+              print(e);         // TODO: DISPLAY ERROR MESSAGE INSTEAD PRINT IF NECESSARY
+            }
+
+            context.loaderOverlay.hide();
 
             // Get the device ID (MAC address)
-            String deviceId = device.id.toString();
-
-            // Show the Alert Dialog
-            showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                title: const Text('Request Access'),
-                content: const Text('You do not have access to connect to this device. Choose \'Request Access\' to email the buoy owner.\n\nUpon granting access, the buoy will appear in your \'Authorized Buoys\' list.'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the dialog
-                    },
-                    child: const Text('Close'),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      // Make HTTP GET request to retrieve owner's email using deviceId
-                      //var response = await http.get('ENDPOINT/$deviceId');
-
-                      // Handle response and extract owner's email
-
-                      // Display the retrieved email or appropriate message
-                      Navigator.pop(context); // Close the dialog
-                    },
-                    child: const Text('Request Access'),
-                  ),
-                ],
-              ),
-            );
+            // String deviceId = device.id.toString();
+            //
+            // // Show the Alert Dialog
+            // showDialog(
+            //   context: context,
+            //   builder: (_) => AlertDialog(
+            //     title: const Text('Request Access'),
+            //     content: const Text('You do not have access to connect to this device. Choose \'Request Access\' to email the buoy owner.\n\nUpon granting access, the buoy will appear in your \'Authorized Buoys\' list.'),
+            //     actions: [
+            //       TextButton(
+            //         onPressed: () {
+            //           Navigator.pop(context); // Close the dialog
+            //         },
+            //         child: const Text('Close'),
+            //       ),
+            //       TextButton(
+            //         onPressed: () async {
+            //           // Make HTTP GET request to retrieve owner's email using deviceId
+            //           //var response = await http.get('ENDPOINT/$deviceId');
+            //
+            //           // Handle response and extract owner's email
+            //
+            //           // Display the retrieved email or appropriate message
+            //           Navigator.pop(context); // Close the dialog
+            //         },
+            //         child: const Text('Request Access'),
+            //       ),
+            //     ],
+            //   ),
+            // );
 
           },
           style: ButtonStyle(

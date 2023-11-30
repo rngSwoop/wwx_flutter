@@ -364,16 +364,17 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      // collectRecordedData();
+                                      // If debugging, comment out collectRecordedData and uncomment portion below
+                                      collectRecordedData();
 
                                       // For debugging purposes, just route the user to the data display
                                       // For proper use, remove the navigator below and uncomment collectRecordedData(); above
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => DataDisplayScreen(dataPoints)
-                                          )
-                                      );
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => DataDisplayScreen(dataPoints)
+                                      //     )
+                                      // );
                                     },
                                     child: Text(
                                       "Collect Recorded Data",
