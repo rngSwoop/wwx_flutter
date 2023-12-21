@@ -102,11 +102,9 @@ class _IndividualBuoyState extends State<IndividualBuoyScreen> {
     // I/flutter (14293): light: 1
     // I/flutter (14293): turbidity1: 0
     // I/flutter (14293): turbidity2: 3000
-    //
-    // The issue is that the buoy appears to only send one instance at a time. We were able to record two instances by
-    // waking up the buoy (pressing down on the chip on the buoy) towards the end of an ongoing read to know that
-    // this code would work for multiple instances of data. It appears that sending one instance of data is what the
-    // buoy is currently designed to do.
+
+    // According to Emma (buoy team) the buoy is set up to record many instances of data.
+    // This code in the app has been tested to handle a single data point, or many
     List<BuoyData> dataPoints = [];
     for (var i = 0; i < val[0]; i++) {  // from i = 0 to length of data instances
       List<int> rawData = await c2!.read();  // read this instance of raw data

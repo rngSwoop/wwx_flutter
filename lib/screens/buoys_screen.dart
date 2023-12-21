@@ -21,7 +21,6 @@ class _BluetoothScanState extends State<BluetoothScan> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     startScan();
   }
@@ -41,7 +40,7 @@ class _BluetoothScanState extends State<BluetoothScan> {
         for (ScanResult r in results) {
           if (r.device.name != "") {                    // If the device name is not empty
             if (!deviceList.contains(r.device)) {       // and the device is not already in our list
-              deviceList.add(r.device);                 // add the device to our list of bt devRices
+              deviceList.add(r.device);                 // add the device to our list of bt devices
               bluetoothItemList.add(
                   BluetoothItem(
                       r.device.name,
@@ -91,8 +90,6 @@ class _BluetoothScanState extends State<BluetoothScan> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  // TODO: FIX SET STATE ERROR, THE VISUAL LIST (GREEN BOXES) ONLY UPDATES ON HOT RELOAD
-                    // TODO: NOW "FIXED" BELOW IN THE ONPRESSED() SINCE IT SCANS IN THE INITSTATE() AS WELL, BETTER SOLUTION NEEDED
                   children: bluetoothItemList
                 ),
               ),
@@ -176,11 +173,11 @@ class BluetoothItem extends StatelessWidget {
             ],
           ),
           onPressed: () async {
-            // This is the existing working code to connect to nearby devices
-            // This is commented out to begin implementation of requesting access
+            // This is the existing working code to connect to nearby devices. Once requesting
+            // access is implemented, we will no longer want this section of code at all.
             try {
-              context.loaderOverlay.show();         // TODO: FIX THE FACT THAT THE context.loaderOverlay IS NOT SHOWING
-              await device.connect(); // CONNECTS TO DEVICE PRESSED
+              context.loaderOverlay.show();
+              await device.connect(); // CONNECTS TO DEVICE PRESSED, 
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -188,10 +185,16 @@ class BluetoothItem extends StatelessWidget {
                   )
               );
             } catch (e) {
-              print(e);         // TODO: DISPLAY ERROR MESSAGE INSTEAD PRINT IF NECESSARY
+              print(e);
             }
 
             context.loaderOverlay.hide();
+
+            // This is commented out so that we can connect to devices the 'old way' for testing purposes.
+            // If the below code is uncommented and you remove the section above which handles connection, the user is
+            // shown the dialog which gives them the option to request access. So, the only thing that really needs
+            // to be implemented is handling the 'Request Access' button press. This would include an API call with
+            // this buoy ID to retrieve the owners email, and formatting and sending an email to the owner.
 
             // Get the device ID (MAC address)
             // String deviceId = device.id.toString();
